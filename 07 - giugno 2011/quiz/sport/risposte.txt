@@ -1,0 +1,6 @@
+6: risposta sport n6
+2: risposta sport n2
+5: risposta sport n5
+3: risposta sport n3
+4: risposta sport n4
+1: risposta sport n1
