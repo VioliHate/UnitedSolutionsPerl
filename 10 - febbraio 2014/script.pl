@@ -3,21 +3,27 @@ my @intervallo=split(/-/,$ARGV[1]);
 my @dialoghi;
 my $yes=0;
 my $row;
+if($intervallo[0]>=60 || $intervallo[1]>=60){
+	print "error - max intervallo 59\n";
+	exit 0;
+}
+if($intervallo[0]>$intervallo[1]){
+	print "error - first set > second set\n";
+	exit 0;
+}
 open(FILE,"$ARGV[0]");
 foreach (<FILE>){
 	if($_=~ /([0-9]{2}):([0-9]{2}):([0-9]{2}),([0-9]{3})\s-->\s([0-9]{2}):([0-9]{2}):([0-9]{2}),([0-9]{3})/){
-		if($2>=$intervallo[0]){
-			if($6<$intervallo[1]){
-				$yes=1;
-			}
-			else{
-				$yes=0;
-			}
+		if($2>=$intervallo[0] && $6<$intervallo[1]){
+			$yes=1;
+		}
+		else{
+			$yes=0;
 		}
 	}
 	if($yes){
 		if($_=~/\w{3,15}/){
-			if($_!~/[0-9]{2}/){
+			if($_!~/[0-9]{1}\n/ && $_!~/[0-9]{2}:/){
 				push @dialoghi,$_;
 			}
 		}
