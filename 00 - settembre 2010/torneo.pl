@@ -1,13 +1,15 @@
 
 #/(m\d.eml)/; # Skip files matching pattern 
-my @girone=("gironi/gironeA","gironi/gironeB","gironi/gironeC","gironi/gironeD",
-	    "gironi/gironeE","gironi/gironeF","gironi/gironeG","gironi/gironeH");
-
+my @girone;
+for my $cartella(qx(ls gironi/| grep girone)){
+	chomp $cartella;
+	push @girone,$cartella;
+}
 my $i=0;
 
 foreach(@girone){
 	my %puntiPerSquadra=();	
-	open(RISULTATI,"<$_/risultati.txt");
+	open(RISULTATI,"<gironi/$_/risultati.txt");
 	foreach(<RISULTATI>){
 		if($_=~/([A-H]{1})\s\N\s([a-z]{3})\s([a-z]{3})\s([a-z]{3})\s([a-z]{3})/) {
 			@puntiPerSquadra{$2,$3,$4,$5}=(0,0,0,0);
@@ -28,11 +30,12 @@ foreach(@girone){
 	}
 	close RISULTATI;
 	my @ordine;
-	foreach $squadra (sort { $puntiPerSquadra{$a} <=> $puntiPerSquadra{$b} } keys %puntiPerSquadra){
+	foreach $squadra (sort { $puntiPerSquadra{$b} <=> $puntiPerSquadra{$a} } keys %puntiPerSquadra){
 		#print "$squadra - $puntiPerSquadra{$squadra}\n";
 		push @ordine,$squadra;	 
         }
 	#print %puntiPerSquadra;
-        print "| @ordine[3,2] ";
+        print "| @ordine[0,1] ";
 	undef %puntiPerSquadra;
 }
+print "|\n";
