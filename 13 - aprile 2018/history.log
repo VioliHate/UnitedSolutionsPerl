@@ -1,0 +1,9 @@
+cd ../../
+cd /home/Scrivania
+cd
+ls
+ls -al
+cd Desktop
+cd ..
+mkdir
+ls -aR
